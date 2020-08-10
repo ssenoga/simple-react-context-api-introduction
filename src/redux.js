@@ -3,12 +3,13 @@ export const initialState = {
 };
 
 export function reducer(state, action) {
+  console.log(action, state);
   if (action.type === "ADD_MESSAGE") {
-    return [...state, action.message];
+    return [...state.messages, action.message];
   } else if (action.type === "DELETE_MESSAGE") {
     return [
-      ...state.slice(0, action.index),
-      ...state.slice(action.index, state.length)
+      ...state.messages.slice(0, action.index),
+      ...state.messages.slice(action.index, state.length)
     ];
   }
 }

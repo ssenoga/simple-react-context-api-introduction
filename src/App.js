@@ -1,24 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { UseStateValue } from "./StateProvider";
-// import {
-//   BrowserRouter as Router,
-//   useParams,
-//   Switch,
-//   Route,
-//   Link
-// } from "react-router-dom";
 
 export default function App() {
-  const [{ messages }] = UseStateValue();
+  const [{ messages }, dispatch] = UseStateValue();
+  const [message, setMessage] = useState("");
+
+  const handleClick = () => {
+    dispatch({
+      type: "ADD_MESSAGE",
+      message: message
+    });
+    setMessage("");
+  };
+
   return (
     <div>
       <ul>
-        {messages.map((message) => (
-          <li>{message}</li>
+        {messages?.map((message) => (
+          <li key={message}>{message}</li>
         ))}
       </ul>
-      <input type="text" />
-      <button>Send</button>
+      <input
+        type="text"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+      />
+      <button onClick={handleClick}>Send</button>
     </div>
   );
 }
