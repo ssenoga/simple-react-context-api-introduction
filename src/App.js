@@ -13,11 +13,25 @@ export default function App() {
     setMessage("");
   };
 
+  const handleDelete = (key) => {
+    dispatch({
+      type: "DELETE_MESSAGE",
+      index: key
+    });
+  };
+
   return (
     <div>
       <ul>
-        {messages?.map((message) => (
-          <li key={message}>{message}</li>
+        {messages?.map((message, index) => (
+          <li
+            key={message}
+            onClick={(e) => {
+              e.preventDefault();
+              handleDelete(index);
+            }}>
+            {message}
+          </li>
         ))}
       </ul>
       <input
@@ -25,7 +39,9 @@ export default function App() {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
       />
-      <button onClick={handleClick}>Send</button>
+      <button disabled={!message} onClick={handleClick}>
+        Send
+      </button>
     </div>
   );
 }
